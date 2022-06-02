@@ -7,6 +7,7 @@ import json
 import logging
 import re
 import time
+import typing
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, Union, cast
 
 from requests import Response
@@ -763,6 +764,9 @@ class Comment(Resource):
             self._parse_raw(raw)
         self.raw: Dict[str, Any] = cast(Dict[str, Any], self.raw)
 
+    # mypy complains about the signature as the order of the parameters is different.
+    # If we follow mypy here we will break backwards compatibility with version <= 3.2 which is probably not advised
+    @typing.no_type_check
     def update(
         self,
         fields: Optional[Dict[str, Any]] = None,
